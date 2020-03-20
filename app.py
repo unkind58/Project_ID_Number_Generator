@@ -40,7 +40,51 @@ class IdNumberGenerator:
  #           input("Please enter your day of birth: ").title())
 
 
-user_id_name = IdNumberGenerator.input_user_name()
-#user_id_birthday = IdNumberGenerator.input_user_birthday()
-print(user_id_name.f_name)
-print(user_id_name.create_last_4_digits())
+user_id = IdNumberGenerator.input_user_name()
+#user_id_birthday = IdNumberGenerator.input_user_birthday()         (DOESN`T WORK, maybe need second class [???])
+print(user_id.f_name)
+print(user_id.create_last_4_digits())
+
+
+
+# --------------- The starting  output of ID itself ---------------
+
+output_id = []
+
+# --------------- 1st digit of ID (male/female) ---------------
+
+if user_id.gender == "Male":
+    output_id.append(3)
+else:
+    output_id.append(4)
+
+# --------------- 2nd-3rd digit of ID (full year) ---------------
+if len(user_id.year) == 4:
+    output_id.append(user_id.year % 100)
+else:
+    output_id.append(19)
+    output_id.append(user_id.year)
+
+# --------------- 4th-5th digit of ID (month) ---------------
+if len(user_id.month) == 2:
+    output_id.append(user_id.month)
+else:
+    output_id.append(0)
+    output_id.append(user_id.month)
+
+# --------------- 6th-7th digit of ID (day)---------------
+if len(user_id.day) == 2:
+    output_id.append(user_id.day)
+else:
+    output_id.append(0)
+    output_id.append(user_id.day)                   # DRY ?????????
+
+# --------------- 8th-11th digit of ID ( random / by growing order)---------------
+
+output_id.append(user_id.last_digits)
+
+
+# Additional possible features:
+
+# (1) Making .txt with id generated in it
+# (2) List of dates when you can marry/buy alco/play in casino/start president campaign/etc...
