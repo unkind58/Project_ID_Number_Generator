@@ -3,21 +3,26 @@ from random import randint
 
 class IdNumberGenerator:
     """"" Class to create ID number according to Lithuanian ID number regulation """
-    version = "[0.1]"
+    version = "[0.2]"
 
-    def __init__(self, f_name, l_name, gender): #  f"Hello, {f_name}. You are {age}."
+    def __init__(self, f_name: str, l_name: str, gender: str): #  f"Hello, {f_name}. You are {age}."
         self.f_name = f_name
         self.l_name = l_name
         self.gender = gender
 
 
-    def birthday(self, year, month, day):
+    def birthday(self, year: int, month: int, day:int):
         self.year = year
         self.month = month
         self.day = day
     
-    #def randomiser(self, last_digits):
-    #    self.last_digits = last_digits
+    def randomiser(self, last_digits):
+        self.last_digits = last_digits
+
+    @staticmethod
+    def create_last_4_digits():
+        last_digits = "".join(["{}".format(randint(0, 9)) for i in range(0, 4)])
+        return last_digits
 
     @classmethod
     def input_user_name(cls):
@@ -26,14 +31,11 @@ class IdNumberGenerator:
             input("Please enter your last name: ").title(),
             input("Please enter your gender: ").title())
 
-    @staticmethod
-    def create_last_4_digits():
-        last_digits = "".join(["{}".format(randint(0, 9)) for i in range(0, 4)])
-        return last_digits
+
 
 
  #   @classmethod
- #   def input_user_birthday(cls):
+ #   def input_user_birthday(cls):                                  DOESN`T WORK, maybe need second class [???])
  #       return cls.birthday()
  #           input("Please enter your year of birth: ").title(),
  #           input("Please enter your month of birth: ").title(),
@@ -42,8 +44,8 @@ class IdNumberGenerator:
 
 user_id = IdNumberGenerator.input_user_name()
 #user_id_birthday = IdNumberGenerator.input_user_birthday()         (DOESN`T WORK, maybe need second class [???])
-print(user_id.f_name)
-print(user_id.create_last_4_digits())
+print(user_id.f_name)                                               # test print1
+print(user_id.create_last_4_digits())                               # test print2
 
 
 
