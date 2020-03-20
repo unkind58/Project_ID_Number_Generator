@@ -3,7 +3,7 @@ from random import randint
 
 class IdNumberGenerator:
     """"" Class to create ID number according to Lithuanian ID number regulation """
-    version = "[0.2]"
+    version = "[0.3]"
 
     def __init__(self, f_name: str, l_name: str, gender: str): #  f"Hello, {f_name}. You are {age}."
         self.f_name = f_name
@@ -56,9 +56,15 @@ output_id = []
 # --------------- 1st digit of ID (male/female) ---------------
 
 if user_id.gender == "Male":
-    output_id.append(3)
-else:
-    output_id.append(4)
+    if 1900 <= user_id.year <= 1999: 
+        output_id.append(3)
+    else:
+        output_id.append(5)
+if user_id.gender == "Female":
+    if 1900 <= user_id.year <= 1999:
+        output_id.append(4)
+    else:
+        output_id.append(6)
 
 # --------------- 2nd-3rd digit of ID (full year) ---------------
 if len(user_id.year) == 4:
@@ -81,9 +87,10 @@ else:
     output_id.append(0)
     output_id.append(user_id.day)                   # DRY ?????????
 
-# --------------- 8th-11th digit of ID ( random / by growing order)---------------
-
-output_id.append(user_id.last_digits)
+# --------------- 8th-10th digit of ID ( ascending  order)---------------
+#TBA
+# --------------- 11th digit of ID ( unique number)---------------
+#TBA
 
 
 # Additional possible features:
