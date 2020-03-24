@@ -1,6 +1,11 @@
+import random
+
+numbers_in_id = 11
+output_id = [0] * numbers_in_id
+
 class IdNumberGenerator:
     """"" Class to create ID number according to Lithuanian ID number regulation """
-    version = "[0.4]"
+    version = "[0.5]"
 
     def __init__(self,):
         pass
@@ -30,58 +35,117 @@ class Birthday:
     @classmethod
     def input_user_birthday(cls):
         return cls(
-            int(input("Please enter your year of birth: ")),
-            int(input("Please enter your month of birth: ")),
-            int(input("Please enter your day of birth: "))
+            eval(input("Please enter your year of birth: ")),
+            eval(input("Please enter your month of birth: ")),
+            eval(input("Please enter your day of birth: "))
         )
 
 
 user_id = Name.input_user_name()
 user_id_birthday = Birthday.input_user_birthday()
-print(user_id.f_name)
+#print(user_id.f_name)
+#print(user_id_birthday.year)
 
-# --------------- The starting  output of ID itself ---------------
-numbers_in_id  = 11
-output_id = [0] * numbers_in_id
+# ------------- rearranging year -------------
 
-# --------------- 1st digit of ID (male/female) ---------------
+if len(str(user_id_birthday.year)) == 4:
+    pass
+if len(str(user_id_birthday.year)) == 2:
+    year = eval(input("Please enter 4 digit year expression: "))
 
-if user_id.gender == "Male":
-    if 1900 <= user_id_birthday.year <= 1999:
+# ------------- 1st digit ------------- [+]
+
+if len(str(user_id_birthday.year)) == 4 and user_id_birthday.year in range(1900, 1999):
+    if user_id.gender.startswith("M"):
         output_id[0] = 3
     else:
-        output_id[0]= 4
-if user_id.gender == "Female":
-    if 1900 <= user_id_birthday.year <= 1999:
-        output_id[0] = 5
-    else:
+        output_id[0] = 4
+if len(str(user_id_birthday.year)) == 4 and user_id_birthday.year in range(2000, 2999):
+    if user_id.gender.startswith("W") and 1900 <= user_id_birthday.year <= 1999:
         output_id[0] = 6
+    else:
+        output_id[0] = 5
 
-# --------------- 2nd-3rd digit of ID (full year) ---------------
-if len(user_id_birthday.year) == 4:
-    output_id.append(user_id_birthday.year % 100)
+# ------------- 2nd-3rd digit ------------- [+]
+
+output_id[1] = user_id_birthday.year % 100 // 10
+output_id[2] = user_id_birthday.year % 10
+
+# ------------- 4th-5th digit ------------- [+]
+
+months = {
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12
+}
+try:
+    if int(user_id_birthday.month):
+        pass
+except ValueError:
+    try:
+        if str(user_id_birthday.month):
+            month = months.get(user_id_birthday.month)
+    except ValueError:
+        year = eval(input("Please enter valid month expression: "))
+
+if len(str(user_id_birthday.month)) == 1:
+    output_id[3] = 0
+    output_id[4] = user_id_birthday.month
 else:
-    output_id.append(19)
-    output_id.append(user_id_birthday.year)
+    output_id[3] = user_id_birthday.month // 10
+    output_id[4] = user_id_birthday.month % 10
 
-# --------------- 4th-5th digit of ID (month) ---------------
-if len(user_id_birthday.month) == 2:
-    output_id.append(user_id_birthday.month)
+# ------------- 6th-7th digit ------------- [+]
+
+if len(str(user_id_birthday.day)) == 1:
+    output_id[5] = 0
+    output_id[6] = user_id_birthday.day
 else:
-    output_id.append(0)
-    output_id.append(user_id_birthday.month)
+    output_id[5] = user_id_birthday.day // 10
+    output_id[6] = user_id_birthday.day % 10
 
-# --------------- 6th-7th digit of ID (day)---------------
-if len(user_id_birthday.day) == 2:
-    output_id.append(user_id_birthday.day)
+# ------------- 8th-10th digit ------------- [+]
+
+sequence = str("".join(["{}".format(random.randint(0, 9)) for i in range(0, 3)]))
+output_id[7] = eval(sequence[0])
+output_id[8] = eval(sequence[1])
+output_id[9] = eval(sequence[2])
+
+# ------------- 11th digit -------------
+counter = 1
+last_digit = 0
+for digit in range(len(output_id) - 1):
+    if counter == 10:
+        counter = 1
+    last_digit += output_id[digit] * counter
+    counter += 1
+# print(last_digit)
+counter = 3
+if last_digit % 11 != 10:
+    output_id[10] = last_digit % 11
 else:
-    output_id.append(0)
-    output_id.append(user_id_birthday.day)  # DRY ?????????
+    last_digit = 0
+    for digit in range(len(output_id) - 1):
+        if counter == 10:
+            counter = 1
+        last_digit += output_id[digit] * counter
+        counter += 1
+if last_digit % 11 != 10:
+    output_id[10] = last_digit % 11
+else:
+    output_id[10] = 0
+# print(last_digit)
 
-# --------------- 8th-10th digit of ID ( ascending  order)---------------
-# TBA
-# --------------- 11th digit of ID ( unique number)---------------
-# TBA
+print(output_id)
 
 
 # Additional possible features:
