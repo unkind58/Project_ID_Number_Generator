@@ -14,7 +14,7 @@ You can read all rules here: https://lt.wikipedia.org/wiki/Asmens_kodas.
 <li>APP will initialize ID Number generator</li>
 <li>1st digit: depends on gender and century person born. 3/4 for male/female borned in XX century and 5/6 for male/female borned in XXI century</li>
 <li>From 2nd to 6th: date of birth with format YYYYMMDD</li>
-<li>From 7th to 10th: ascending order of the all borned that day in country</li>
+<li>From 7th to 10th: ascending order of the all borned that day in country (but here in project I made random order)</li>
 <li>11th: checksum digit calculated by special algorithm</li>
 </ol>
 
