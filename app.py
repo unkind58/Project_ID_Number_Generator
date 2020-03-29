@@ -95,11 +95,11 @@ def digit_4to5():
     try:
         if int(user_id_birthday.month):
             pass
-    except ValueError or NameError:
+    except  ValueError:
         try:
             if str(user_id_birthday.month):
                 user_id_birthday.month = months.get(user_id_birthday.month)
-        except ValueError or NameError:
+        except NameError:
             user_id_birthday.month = eval(input("Please enter valid month expression: "))
 
     if len(str(user_id_birthday.month)) == 1:
@@ -154,6 +154,8 @@ def digit_11():
 
 
 if __name__== "__main__":
+    rearranging_gender()
+    rearranging_year()
     digit_1()
     digit_2to3()
     digit_4to5()
