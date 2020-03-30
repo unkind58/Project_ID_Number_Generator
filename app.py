@@ -1,9 +1,5 @@
 import random
 
-""""" Initializing and preparing output answer """
-numbers_in_id = 11
-output_id = [0] * numbers_in_id
-
 
 class Name:
     def __init__(self, f_name: str, l_name: str, gender: str):
@@ -30,14 +26,15 @@ class Birthday:
     def input_user_birthday(cls):
         return cls(
             eval(input("Please enter your year of birth: ")),
-            input("Please enter your month of birth: ").title(),
+            "".join(input("Please enter your month of birth: ").split()).title(),
             eval(input("Please enter your day of birth: "))
         )
 
 
-""""" Calling all both Class`es for input """
-user_id = Name.input_user_name()
-user_id_birthday = Birthday.input_user_birthday()
+def intro():
+    """"" Intro message """
+    print("Dear sir/madam,\n"
+          "Next you will be asked to enter your credentials in order to generate your ID number.")
 
 
 def rearranging_year():
@@ -54,6 +51,31 @@ def rearranging_gender():
         pass
     else:
         user_id.gender = "".join(input("Please enter Male or Female as your gender: ").split()).title()
+
+
+def rearranging_month():
+    """"" Rearranging month if was entered as string type """
+    months = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12
+    }
+    try:
+        int(user_id_birthday.month)
+    except ValueError:
+        try:
+            user_id_birthday.month = months[user_id_birthday.month]
+        except KeyError:
+            user_id_birthday.month = int(input("Please enter month in numerical expression: "))
 
 
 def digit_1():
@@ -78,30 +100,6 @@ def digit_2to3():
 
 def digit_4to5():
     """"" Initializing 4th and 5th digit """
-    months = {
-        "January": 1,
-        "February": 2,
-        "March": 3,
-        "April": 4,
-        "May": 5,
-        "June": 6,
-        "July": 7,
-        "August": 8,
-        "September": 9,
-        "October": 10,
-        "November": 11,
-        "December": 12
-    }
-    try:
-        if int(user_id_birthday.month):
-            pass
-    except  ValueError:
-        try:
-            if str(user_id_birthday.month):
-                user_id_birthday.month = months.get(user_id_birthday.month)
-        except NameError:
-            user_id_birthday.month = eval(input("Please enter valid month expression: "))
-
     if len(str(user_id_birthday.month)) == 1:
         output_id[3] = 0
         output_id[4] = int(user_id_birthday.month)
@@ -152,22 +150,32 @@ def digit_11():
     else:
         output_id[10] = 0
 
+def saving_to_txt_file():
+    save_txt = input("Do you want to save you id number to .txt file?").title()
+    if save_txt.startswith("Y"):
+        with open(f"{user_id.f_name}_{user_id.l_name}.txt", "w") as file:
+            file.write(f"Dear {user_id.f_name} {user_id.l_name}, your ID number is {''.join(map(str, output_id))}")
+    else:
+        print(f"{user_id.f_name} {user_id.l_name}, your ID number is {''.join(map(str, output_id))}")
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
+    numbers_in_id = 11
+    output_id = [0] * numbers_in_id
+    intro()
+    user_id = Name.input_user_name()
     rearranging_gender()
+    user_id_birthday = Birthday.input_user_birthday()
     rearranging_year()
+    rearranging_month()
     digit_1()
     digit_2to3()
     digit_4to5()
     digit_6to7()
     digit_8to10()
     digit_11()
-
-
-""""" Output """
-print(f"Dear {user_id.f_name} {user_id.l_name}, your ID number is {''.join(map(str, output_id))}")
-
-
+    saving_to_txt_file()
+    
 # Additional possible features:
-# (1) Making .txt with id generated in it
-# (2) List of dates when you can marry/buy alcohol/play in casino/start president campaign/etc...
+# (1) List of dates when you can marry/buy alcohol/play in casino/start president campaign/etc...
+# (2) Send email (finding @)
