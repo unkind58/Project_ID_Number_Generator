@@ -1,4 +1,5 @@
 import random
+import day_validation
 
 
 class Name:
@@ -77,15 +78,18 @@ def rearranging_month():
         except KeyError:
             user_id_birthday.month = int(input("Please enter month in numerical expression: "))
 
+    if int(user_id_birthday.month) > 12:
+        user_id_birthday.month = int(input("Please enter month in numerical expression: "))
+
 
 def digit_1():
     """"" Initializing 1st digit """
-    if len(str(user_id_birthday.year)) == 4 and user_id_birthday.year in range(1900, 1999):
+    if user_id_birthday.year in range(1900, 1999):
         if user_id.gender.startswith("M"):
             output_id[0] = 3
         else:
             output_id[0] = 4
-    if len(str(user_id_birthday.year)) == 4 and user_id_birthday.year in range(2000, 2999):
+    if user_id_birthday.year in range(2000, 2999):
         if user_id.gender.startswith("F") or user_id.gender.startswith("W") and 1900 <= user_id_birthday.year <= 1999:
             output_id[0] = 6
         else:
@@ -150,8 +154,9 @@ def digit_11():
     else:
         output_id[10] = 0
 
+
 def saving_to_txt_file():
-    save_txt = input("Do you want to save you id number to .txt file?").title()
+    save_txt = input("Do you want to save you id number to .txt file? ").title()
     if save_txt.startswith("Y"):
         with open(f"{user_id.f_name}_{user_id.l_name}.txt", "w") as file:
             file.write(f"Dear {user_id.f_name} {user_id.l_name}, your ID number is {''.join(map(str, output_id))}")
@@ -168,6 +173,7 @@ if __name__ == "__main__":
     user_id_birthday = Birthday.input_user_birthday()
     rearranging_year()
     rearranging_month()
+    day_validation.day_valid(user_id_birthday.day, user_id_birthday.month)
     digit_1()
     digit_2to3()
     digit_4to5()
@@ -175,7 +181,7 @@ if __name__ == "__main__":
     digit_8to10()
     digit_11()
     saving_to_txt_file()
-    
+
 # Additional possible features:
 # (1) List of dates when you can marry/buy alcohol/play in casino/start president campaign/etc...
 # (2) Send email (finding @)
