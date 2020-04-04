@@ -181,7 +181,3 @@ if __name__ == "__main__":
     digit_8to10()
     digit_11()
     saving_to_txt_file()
-
-# Additional possible features:
-# (1) List of dates when you can marry/buy alcohol/play in casino/start president campaign/etc...
-# (2) Send email (finding @)
