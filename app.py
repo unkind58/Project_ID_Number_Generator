@@ -114,12 +114,12 @@ def digit_4to5():
 
 def digit_6to7():
     """"" Initializing 6th and 7th digit """
-    if len(str(user_id_birthday.day)) == 1:
+    if len(str(user_id_day)) == 1:
         output_id[5] = 0
-        output_id[6] = user_id_birthday.day
+        output_id[6] = user_id_day
     else:
-        output_id[5] = user_id_birthday.day // 10
-        output_id[6] = user_id_birthday.day % 10
+        output_id[5] = user_id_day // 10
+        output_id[6] = user_id_day % 10
 
 
 def digit_8to10():
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     user_id_birthday = Birthday.input_user_birthday()
     rearranging_year()
     rearranging_month()
-    day_validation.day_valid(user_id_birthday.day, user_id_birthday.month)
+    user_id_day = day_validation.day_valid(user_id_birthday.day, user_id_birthday.month)
     digit_1()
     digit_2to3()
     digit_4to5()
@@ -181,3 +181,4 @@ if __name__ == "__main__":
     digit_8to10()
     digit_11()
     saving_to_txt_file()
+

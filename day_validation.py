@@ -4,3 +4,4 @@ def day_valid(day, month):
         pass
     else:
         day = int(input("Please enter day in numerical expression: "))
+    return day
